@@ -51,7 +51,7 @@ class BigQueryService(_BigQueryBase):
                     break
 
                 get_list_request['pageToken'] = page_token
-                bq_request = self.service.tables().list(**get_list_request)
+                bq_request = self.bq_service.tables().list(**get_list_request)
                 response = self._execute_api_request(bq_request)
 
         logging.debug('table_names: %s', table_names)
@@ -82,7 +82,7 @@ class BigQueryService(_BigQueryBase):
         }
         LOGGER.debug('Running query: %s with body: %s', query, query_request)
 
-        bq_request = self.service.jobs().query(
+        bq_request = self.bq_service.jobs().query(
             projectId=project_id,
             body=query_request)
         response = self._execute_api_request(bq_request)
@@ -108,7 +108,7 @@ class BigQueryService(_BigQueryBase):
             # Set the page token so that we know where to start reading from.
             get_results_request['pageToken'] = page_token
             logging.info('Running get_results_request: %s', get_results_request)
-            bq_request = self.service.jobs().getQueryResults(**get_results_request)
+            bq_request = self.bq_service.jobs().getQueryResults(**get_results_request)
             response = self._execute_api_request(bq_request)
         return content
 
