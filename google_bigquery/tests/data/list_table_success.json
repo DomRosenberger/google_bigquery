@@ -1,0 +1,37 @@
+{
+    "kind": "bigquery#tableList",
+    "totalItems": 3,
+    "tables": [
+        {
+            "tableReference": {
+                "datasetId": "dataset_id",
+                "projectId": "project_id",
+                "tableId": "table_id20151105"
+            },
+            "kind": "bigquery#table",
+            "id": "project_id:dataset_id.table_id20151105",
+            "type": "TABLE"
+        },
+        {
+            "tableReference": {
+                "datasetId": "dataset_id",
+                "projectId": "project_id",
+                "tableId": "table_id20151106"
+            },
+            "kind": "bigquery#table",
+            "id": "project_id:dataset_id.table_id20151106",
+            "type": "TABLE"
+        },
+        {
+            "tableReference": {
+                "datasetId": "dataset_id",
+                "projectId": "project_id",
+                "tableId": "table_id20151107"
+            },
+            "kind": "bigquery#table",
+            "id": "project_id:dataset_id.table_id20151107",
+            "type": "TABLE"
+        }
+    ],
+    "etag": "rCPrXtYoYd8Ehc3479a6UvHAT8wPoTuAMenOu6Jz3tUg1zEfKDA"
+}

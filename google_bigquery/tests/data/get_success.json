@@ -1,0 +1,32 @@
+{
+    "kind": "bigquery#table",
+    "streamingBuffer":
+        {
+            "estimatedBytes": "11652",
+            "estimatedRows": "103",
+            "oldestEntryTime": "1457529840000"
+        },
+    "creationTime": "1457529860760",
+    "tableReference":
+        {
+            "projectId": "bigquery_project_id",
+            "tableId": "bigquery_table_id",
+            "datasetId": "bigquery_dataset_id"
+        },
+    "numRows": "0",
+    "numBytes": "0",
+    "etag": "rXtYoYd8Ehc3479a6U-FvHA/MTQ1NzUyOTg2Mzg5Mw",
+    "location": "US",
+    "lastModifiedTime": "1457529863893",
+    "type": "TABLE",
+    "id": "bigquery_project_id:bigquery_dataset_id.bigquery_table_id",
+    "selfLink": "https://www.googleapis.com/bigquery/v2/projects/bigquery_project_id/datasets/bigquery_dataset_id/tables/bigquery_table_id",
+    "schema":
+        {
+            "fields": [
+                {"type": "STRING", "name": "firstname", "mode": "REQUIRED"},
+                {"type": "STRING", "name": "surname", "mode": "REQUIRED"},
+                {"type": "INTEGER", "name": "age", "mode": "NULLABLE"}
+            ]
+        }
+}

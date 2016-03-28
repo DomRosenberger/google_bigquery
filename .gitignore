@@ -1,0 +1,22 @@
+.DS_Store
+
+# Basics
+*.py[cod]
+*.pyc
+__pycache__
+
+# Logs
+*.log
+pip-log.txt
+
+# Vim
+*~
+*.swp
+*.swo
+
+# Setuptools distribution folder.
+build/
+dist/
+
+# Python egg metadata, regenerated from source files by setuptools.
+*.egg-info/
