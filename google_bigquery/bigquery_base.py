@@ -208,15 +208,20 @@ class _BigQueryBase(object):
         table_info_response = self._execute_api_request(bq_request)
         return table_info_response.get('schema', {})
 
-    def read_table_rows(self, project_id, dataset_id, table_id,
-                        max_rows=DEFAULT_MAX_BQ_ROWS):
-        """Read rows from BigQuery table with max_rows restriction.
+    def get_table_rows(self, project_id, dataset_id, table_id,
+                       max_rows=DEFAULT_MAX_BQ_ROWS):
+        """Returns rows from BigQuery table with max_rows restriction.
 
         Args:
             project_id: Str, the BigQuery project ID.
             dataset_id: Str, the BigQuery dataset ID.
             table_name: Str, the BigQuery table ID.
             max_rows: Int, the maximum number of rows to return.
+        Returns:
+            [[str, str]], a nested list where each list contains all values from each
+            row represented as a unicode string.
+            Example: [[u'Dave', u'Smith', u'25', u'New York'],
+                      [u'Andrew', u'Tayler', u'30', 'Chicago']]
         """
         table_ref = {
             'projectId': project_id,
@@ -226,7 +231,7 @@ class _BigQueryBase(object):
         rows = []
         while len(rows) < max_rows:
             bq_request = self.bq_service.tabledata().list(
-                maxResults=min(MIN_BQ_ROWS, max_rows - len(rows)),
+                maxResults=min(DEFAULT_MIN_BQ_ROWS, max_rows - len(rows)),
                 startIndex=len(rows), **table_ref
             )
             data = self._execute_api_request(bq_request)
