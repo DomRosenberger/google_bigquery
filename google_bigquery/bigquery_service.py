@@ -102,12 +102,12 @@ class BigQueryService(_BigQueryBase):
             if query_complete:
                 content += self.get_query_content_as_string(response)
                 if page_token is None:
-                    logging.info('No new page_token, break loop!')
+                    LOGGER.debug('No new page_token, break loop!')
                     break
 
             # Set the page token so that we know where to start reading from.
             get_results_request['pageToken'] = page_token
-            logging.info('Running get_results_request: %s', get_results_request)
+
             bq_request = self.bq_service.jobs().getQueryResults(**get_results_request)
             response = self._execute_api_request(bq_request)
         return content

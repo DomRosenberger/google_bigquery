@@ -120,7 +120,7 @@ class _BigQueryBase(object):
 
         Args:
             project_id: Str, the BigQuery project ID.
-            datasetId: Str, the BigQuery dataset ID.
+            dataset_id: Str, the BigQuery dataset ID.
             table_name: Str, the BigQuery table ID.
             check_if_exists: Boolean, whether to check if table exists before deleting it.
         Returns:
@@ -191,7 +191,7 @@ class _BigQueryBase(object):
 
         Args:
             project_id: Str, the BigQuery project ID.
-            datasetId: Str, the BigQuery dataset ID.
+            dataset_id: Str, the BigQuery dataset ID.
             table_name: Str, the BigQuery table ID.
         Returns:
             {'fields': [{str: str}]}, the Schema of the BigQuery table.
@@ -214,7 +214,7 @@ class _BigQueryBase(object):
 
         Args:
             project_id: Str, the BigQuery project ID.
-            datasetId: Str, the BigQuery dataset ID.
+            dataset_id: Str, the BigQuery dataset ID.
             table_name: Str, the BigQuery table ID.
             max_rows: Int, the maximum number of rows to return.
         """
@@ -245,7 +245,7 @@ class _BigQueryBase(object):
 
         Args:
             project_id: Str, the BigQuery project ID.
-            datasetId: Str, the BigQuery dataset ID.
+            dataset_id: Str, the BigQuery dataset ID.
             table_name: Str, the BigQuery table ID.
             query: Str, the query to update the table with.
         Returns:
@@ -259,7 +259,7 @@ class _BigQueryBase(object):
         }
         LOGGER.debug(
             'Updating table view with: %s for '
-            'datasetId: %s', request_body, dataset_id)
+            'dataset_id: %s', request_body, dataset_id)
 
         bq_request = self.bq_service.tables().patch(
             projectId=project_id,
@@ -275,7 +275,7 @@ class _BigQueryBase(object):
 
         Args:
             project_id: Str, the BigQuery project ID.
-            datasetId: Str, the BigQuery dataset ID.
+            dataset_id: Str, the BigQuery dataset ID.
             table_name: Str, the BigQuery table ID.
             json_rows: [{'json': {'field_name': 'field_value'}}], list of json rows.
             skip_invalid_rows: Bool, optional flag whether to insert all valid rows of a request,
