@@ -251,7 +251,7 @@ class _BigQueryBase(object):
         Args:
             project_id: Str, the BigQuery project ID.
             dataset_id: Str, the BigQuery dataset ID.
-            table_name: Str, the BigQuery table ID.
+            view_table_id: Str, the BigQuery table ID of the table view.
             query: Str, the query to update the table with.
         Returns:
             A table resource in a resource body if API call was successful.
