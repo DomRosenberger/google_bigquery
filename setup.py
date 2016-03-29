@@ -6,7 +6,7 @@ def readme():
         return f.read()
 
 setup(name='google_bigquery',
-      version='0.11',
+      version='0.12',
       description='Wrapper for Google\'s Bigquery Python API.',
       keywords='bigquery google',
       url='http://github.com/Nobody109/google_bigquery',
