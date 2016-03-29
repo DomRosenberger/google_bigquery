@@ -232,7 +232,8 @@ class _BigQueryBase(object):
         while len(rows) < max_rows:
             bq_request = self.bq_service.tabledata().list(
                 maxResults=min(DEFAULT_MIN_BQ_ROWS, max_rows - len(rows)),
-                startIndex=len(rows), **table_ref
+                startIndex=len(rows),
+                **table_ref
             )
             data = self._execute_api_request(bq_request)
             max_rows = min(max_rows, int(data['totalRows']))

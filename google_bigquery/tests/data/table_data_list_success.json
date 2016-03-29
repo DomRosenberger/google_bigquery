@@ -1,0 +1,31 @@
+{
+    "kind": "bigquery#tableDataList",
+    "totalRows": "3",
+    "rows": [
+        {
+            "f": [
+                {"v": "Dave"},
+                {"v": "Smith"},
+                {"v": "25"},
+                {"v": "New York"}
+            ]
+        },
+        {
+            "f": [
+                {"v": "Andrew"},
+                {"v": "Tayler"},
+                {"v": "30"},
+                {"v": "Chicago"}
+            ]
+        },
+        {
+            "f": [
+                {"v": "Tim"},
+                {"v": "Woods"},
+                {"v": "35"},
+                {"v": "Orlando"}
+            ]
+        }
+    ],
+    "etag": "\"-rCPrXtYoYd8Ehc3479a6UB87y8NuGKOgOlZ7FkfPBv17Wts\""
+}

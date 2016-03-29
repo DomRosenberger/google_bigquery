@@ -10,7 +10,8 @@ https://developers.google.com/api-client-library/python/guide/mocks#example
 
 import json
 import mox
-from google_bigquery.bigquery_base import _BigQueryBase
+from google_bigquery.bigquery_base import _BigQueryBase, DEFAULT_MIN_BQ_ROWS, \
+    DEFAULT_MAX_BQ_ROWS
 from google_bigquery.bigquery_service import DEFAULT_NUM_API_RETRIES
 
 FAKE_PROJECT_ID = 'bigquery_project_id'
@@ -28,6 +29,7 @@ FAKE_TABLE_SCHEMA = {
 TABLE_INSERT_SUCCESS_FILE = 'google_bigquery/tests/data/insert_success.json'
 TABLE_DELETE_SUCCESS_FILE = 'google_bigquery/tests/data/delete_success.json'
 TABLE_GET_SUCCESS_FILE = 'google_bigquery/tests/data/delete_success.json'
+TABLE_DATA_LIST_SUCCESS_FILE = 'google_bigquery/tests/data/table_data_list_success.json'
 
 
 class BigQueryBaseTest(mox.MoxTestBase):
@@ -61,7 +63,6 @@ class BigQueryBaseTest(mox.MoxTestBase):
             self.table_id,
             FAKE_TABLE_SCHEMA
         )
-
         self.assertEquals(u'TABLE', response.get('type'))
         self.assertEquals(u'bigquery#table', response.get('kind'))
 
@@ -78,7 +79,6 @@ class BigQueryBaseTest(mox.MoxTestBase):
             self.table_id,
             check_if_exists=False,
         )
-
         self.assertEquals({}, response)
 
     def test_has_table_success(self):
@@ -93,8 +93,28 @@ class BigQueryBaseTest(mox.MoxTestBase):
             self.dataset_id,
             self.table_id,
         )
-
         self.assertTrue(response)
+
+    def test_get_table_rows(self):
+        """Test function to get table rows."""
+        expected_response = [
+            [u'Dave', u'Smith', u'25', u'New York'],
+            [u'Andrew', u'Tayler', u'30', u'Chicago'],
+            [u'Tim', u'Woods', u'35', u'Orlando']
+        ]
+
+        bq_service_mock = self._mock_table_data_list()
+        # bq_service_mock = self._mock_get_table()
+        self.mox.ReplayAll()
+
+        bq_service_obj = _BigQueryBase(bq_service_mock, DEFAULT_NUM_API_RETRIES)
+
+        response = bq_service_obj.get_table_rows(
+            self.project_id,
+            self.dataset_id,
+            self.table_id,
+        )
+        self.assertEquals(expected_response, response)
 
     def _mock_execute(self, json_file):
         json_response = None
@@ -148,4 +168,21 @@ class BigQueryBaseTest(mox.MoxTestBase):
         ).AndReturn(bq_execute_mock)
 
         bq_service_mock.tables().AndReturn(bq_table_service_mock)
+        return bq_service_mock
+
+    def _mock_table_data_list(self):
+        bq_service_mock = self.mox.CreateMockAnything()
+
+        bq_table_data_service_mock_1 = self.mox.CreateMockAnything()
+        bq_execute_mock = self._mock_execute(TABLE_DATA_LIST_SUCCESS_FILE)
+        # Mock list function call.
+        bq_table_data_service_mock_1.list(
+            projectId=self.project_id,
+            datasetId=self.dataset_id,
+            tableId=self.table_id,
+            maxResults=min(DEFAULT_MIN_BQ_ROWS, DEFAULT_MAX_BQ_ROWS - 0),
+            startIndex=0
+        ).AndReturn(bq_execute_mock)
+
+        bq_service_mock.tabledata().AndReturn(bq_table_data_service_mock_1)
         return bq_service_mock
