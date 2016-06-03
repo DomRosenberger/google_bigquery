@@ -48,7 +48,8 @@ class _BigQueryBase(object):
         return response
 
     def insert_table(self, project_id, dataset_id, table_id,
-                     table_schema, expire_in_hours=None):
+                     table_schema, expire_in_hours=None, use_time_partitioning=False,
+                     time_partitioning_expire_in_hours=None):
         """Inserts data to a new BigQuery table.
 
         Args:
@@ -57,7 +58,12 @@ class _BigQueryBase(object):
             table_id: Str, the BigQuery table ID.
             table_schema: {'fields': [{str: str}]}, the BigQuery table schema. E.g.
                 {'fields': [{'type': 'STRING', 'name': 'campaign', 'mode': 'REQUIRED'}]}
-            expire_in_hours: Int, the expiry time in hours for the create BigQuery table.
+            expire_in_hours: Int, optional expiry time in hours when BigQuery table expires.
+            use_time_partitioning: Bool, whether to use time-based partitioning for this table.
+                This feature is currently in experimental mode. Default to false. See also
+                https://cloud.google.com/bigquery/docs/reference/v2/tables#resource-representations
+            time_partitioning_expire_in_hours: Int, the expiry time in hours for keeping partitions.
+                Field will be ignored if time_partitioning is not set to true.
         Returns:
             A table resource in a resource body if API call was successful.
             See also: https://cloud.google.com/bigquery/docs/reference/v2/tables#resource
@@ -74,6 +80,15 @@ class _BigQueryBase(object):
             'tableReference': table_ref,
             'schema': table_schema,
         }
+        if use_time_partitioning:
+            time_partitioning = {
+                'type': 'DAY',  # Only supported type.
+            }
+            if time_partitioning_expire_in_hours:
+                time_partitioning['expirationMs'] = MillisecondsSinceEpoch(
+                    time_partitioning_expire_in_hours)
+            request_body['timePartitioning'] = time_partitioning
+
         if expire_in_hours:
             request_body['expirationTime'] = MillisecondsSinceEpoch(expire_in_hours)
 

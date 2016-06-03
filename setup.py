@@ -15,7 +15,7 @@ if sys.argv[-1] == 'publish':
     sys.exit()
 
 setup(name='google_bigquery',
-      version='0.13',
+      version='0.14',
       description='Wrapper for Google\'s Bigquery Python API.',
       keywords='bigquery google',
       url='http://github.com/Nobody109/google_bigquery',
